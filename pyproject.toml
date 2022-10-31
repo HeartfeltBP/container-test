@@ -1,11 +1,9 @@
 [tool.poetry]
-name = "Enceladus"
+name = "container-test"
 version = "0.1.0"
-description = "Model garden for blood pressure estimation."
+description = "container test"
 authors = ["Cameron Johnson"]
-license = "MIT"
-readme = "README.md"
-packages = [{include = "src"}]
+packages = []
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.9"
