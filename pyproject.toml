@@ -3,7 +3,6 @@ name = "container-test"
 version = "0.1.0"
 description = "container test"
 authors = ["Cameron Johnson"]
-packages = []
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.9"
