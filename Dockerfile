@@ -39,7 +39,8 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         libzmq3-dev \
         pkg-config \
         software-properties-common \
-        unzip
+        unzip \
+        git
 
 # Install TensorRT if not building for PowerPC
 # NOTE: libnvinfer uses cuda11.1 versions
@@ -75,14 +76,9 @@ RUN python3 -m pip --no-cache-dir install --upgrade \
 # Some TF tools expect a "python" binary
 RUN ln -s $(which python3) /usr/local/bin/python
 
-COPY poetry.lock /
-COPY pyproject.toml /
-
 RUN pip install --upgrade pip && pip install "poetry==1.2.0"
 
-RUN poetry export -f requirements.txt --output requirements.txt
-
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --upgrade build
 
 COPY bashrc /etc/bash.bashrc
 RUN chmod a+rwx /etc/bash.bashrc
