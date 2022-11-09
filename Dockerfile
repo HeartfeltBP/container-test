@@ -41,7 +41,8 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/
         software-properties-common \
         unzip \
         git \
-        openssh-client
+        openssh-client \
+        wget
 
 # Install TensorRT if not building for PowerPC
 # NOTE: libnvinfer uses cuda11.1 versions
@@ -79,7 +80,7 @@ RUN ln -s $(which python3) /usr/local/bin/python
 
 RUN pip install --upgrade pip && pip install "poetry==1.2.0"
 
-RUN python -m pip install --upgrade build
+RUN python -m pip install --upgrade build requests
 
 RUN mkdir /home/.ssh
 COPY id_rsa /home/.ssh
@@ -93,6 +94,12 @@ COPY Enceladus /home/Enceladus
 
 RUN mkdir /home/database_tools
 COPY database_tools /home/database_tools
+
+WORKDIR /home/Enceladus
+RUN poetry export -f requirements.txt --output requirements.txt
+
+WORKDIR /home/database_tools
+RUN poetry export -f requirements.txt --output requirements.txt
 
 COPY bashrc /etc/bash.bashrc
 RUN chmod a+rwx /etc/bash.bashrc
